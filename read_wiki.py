@@ -50,6 +50,8 @@ def read_article(url : str) -> str:
             text = ' '.join(chunk for chunk in chunks if chunk)  # remove blank lines
             text = re.sub(r'\[\d+]', '', text) # remove citations
             text = re.sub(r'\[[a-z|A-Z]]', '', text) # remove non-numeric citations
+            text = re.sub(r'[^\w\s\'\-]', '', text) # remove non-word characters
+            text = re.sub(r'\s\s+', ' ', text)  # remove multi-spaces
         else: print(f'Failed to read content of this article: {url}')
 
     else: print(f'Failed to read {url} with error code: {response.status_code}')
