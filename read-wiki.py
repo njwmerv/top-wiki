@@ -43,10 +43,10 @@ def read_article(url : str) -> str:
         if content:
             text = content.get_text()
             lines = (line.strip() for line in text.splitlines()) # break into lines and remove leading and trailing space on each
-            chunks = (phrase.strip() for line in lines for phrase in line.split('  ')) # break multi-headlines into a line each
+            chunks = (phrase.strip() for line in lines for phrase in line.split(' ')) # break multi-headlines into a line each
             text = ' '.join(chunk for chunk in chunks if chunk)  # remove blank lines
-            text = re.sub(r'\[\d+]', '', text)
-            text = re.sub(r'\[a]', '', text)
+            text = re.sub(r'\[\d+]', '', text) # remove citations
+            text = re.sub(r'\[[a-z|A-Z]]', '', text) # remove non-numeric citations
         else:
             print(f'Failed to read content of this article: {url}')
     else:
@@ -56,7 +56,7 @@ def read_article(url : str) -> str:
 # Creates a list of the text of the top 25 articles of Wikipedia for the week
 def read_top_25_articles() -> list[str]:
     articles : list[str] = []
-    urls : list[str] = get_top_25_urls()
+    urls : list[str] = get_top_25_urls() # get urls to scrape
     for article_url in urls:
         article_text : str = read_article(article_url)
         if article_text != '': articles.append(article_text)
