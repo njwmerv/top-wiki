@@ -22,8 +22,8 @@ if __name__ == "__main__":
     document_terms_matrix = document_terms_matrix.toarray()
 
     # Make matrix of term frequency and inverse document frequency
-    td_idf_vectorizer = TfidfVectorizer()
-    tf_idf_matrix = td_idf_vectorizer.fit_transform(articles_df['text'])
+    tf_idf_vectorizer = TfidfVectorizer()
+    tf_idf_matrix = tf_idf_vectorizer.fit_transform(articles_df['text'])
     tf_idf_matrix = tf_idf_matrix.toarray()
 
     # Word frequencies
@@ -53,7 +53,7 @@ if __name__ == "__main__":
     nmf_model = NMF(n_components=25, random_state=100)
     topic_matrix = nmf_model.fit_transform(tf_idf_matrix)
     # Get top words for each topic
-    feature_names = td_idf_vectorizer.get_feature_names_out()
+    feature_names = tf_idf_vectorizer.get_feature_names_out()
     for topic_idx, topic in enumerate(nmf_model.components_):
         top_words = [feature_names[i] for i in topic.argsort()[:-100 - 1:-1]]
         print(f"Topic {topic_idx}: {', '.join(top_words)}")
