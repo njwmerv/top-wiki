@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from textblob import TextBlob
 from read_wiki import read_top_25_articles
 from sklearn.decomposition import NMF
 from sklearn.metrics.pairwise import cosine_similarity
@@ -57,3 +58,7 @@ if __name__ == "__main__":
     for topic_idx, topic in enumerate(nmf_model.components_):
         top_words = [feature_names[i] for i in topic.argsort()[:-100 - 1:-1]]
         print(f"Topic {topic_idx}: {', '.join(top_words)}")
+
+    # Sentiment Analysis
+    articles_df['sentiment'] = articles_df['text'].apply(lambda x: TextBlob(x).sentiment.polarity)
+
