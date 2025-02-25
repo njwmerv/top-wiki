@@ -19,7 +19,7 @@ def get_top_25_urls() -> dict[str, str] | None:
             for row in rows:
                 try:
                     article : Tag = row.find_all('td')[1] # only look at article name column (which has url)
-                    url : str = f'{ROOT_URL}{article.find('a').get('href')}'
+                    url : str = f'{ROOT_URL}{article.find("a").get("href")}'
                     name : str = article.find('a').get_text()
                     articles[name] = url
                 except:
