@@ -47,7 +47,7 @@ if __name__ == "__main__":
     for i in range(25):
         most_similar = np.argsort(article_similarities[i])[-2] # the last one is 1, which is similarity with self
         print(f'Article most similar to {articles_df.loc[i, 'name']} is {articles_df.loc[most_similar, 'name']} with score of: {article_similarities[i][most_similar]}')
-        average_similarity = np.mean(np.sort(article_similarities[i])[:len(article_similarities)])
+        average_similarity = np.mean(np.sort(article_similarities[i])[:len(article_similarities)-1])
         print(f'The average similarity score is: {average_similarity}')
 
     # Grouping words by topic
@@ -61,4 +61,4 @@ if __name__ == "__main__":
 
     # Sentiment Analysis
     articles_df['sentiment'] = articles_df['text'].apply(lambda x: TextBlob(x).sentiment.polarity)
-
+    print(articles_df[['name', 'sentiment']])
